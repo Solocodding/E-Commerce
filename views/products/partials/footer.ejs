@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-container span {
+            flex: 1 1 200px;
+            margin: 10px;
+        }
+
+        .footer-container span p {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .footer-container span a {
+            display: block;
+            text-decoration: none;
+            color: #555;
+            margin: 5px 0;
+            transition: color 0.3s ease;
+        }
+
+        .footer-container span a:hover {
+            color: #007BFF;
+        }
+
+        p {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        p:last-child {
+            margin-top: 30px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            color: #999;
+        }
+
+        @media screen and (max-width: 768px) {
+            .footer-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-container span {
+                flex: 1 1 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="footer-container">
+        <span class="about">
+            <p>About</p>
+            <a href="#">Contact us</a>
+            <a href="#">About us</a>
+            <a href="#">Privacy Policy</a>
+        </span>
+        <span class="product">
+            <p>product</p>
+            <a href="#">Electronics</a>
+            <a href="#">Fashion</a>
+            <a href="#">Toys & Games</a>
+            <a href="#">Beauty & Health</a>
+        </span>
+        <span class="links">
+            <p>Usefull Links</p>
+            <a href="#">Help</a>
+            <a href="">login</a>
+            <a href="#">Signup</a>
+        </span>
+        <span class="follow">
+            <p>Follow us</p>
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">Instagram</a>
+        </span>
+
+    </div>
+    <p>&copy; 2023 E-Commerce. All rights reserved.</p>
+
+</body>
+
+</html>

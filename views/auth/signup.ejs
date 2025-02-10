@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="/signup.css"> 
+    <script>
+        window.onload = function () {
+            const msg = "<%= typeof message !== 'undefined' ? message : '' %>";
+            if (msg) {
+                alert(msg);
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="signup-container">
+        <h1>Create an Account</h1>
+        <form method="POST" action="/auth/signup">
+            <!-- Full Name Field -->
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+            <!-- Email Field -->
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <!-- Role Field -->
+            <label for="role">Role:</label>
+            <select id="role" name="role">
+                <option value="user">User</option>
+                <option value="seller">Seller</option>
+            </select>
+
+            <!-- Password Field -->
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <!-- Confirm Password Field -->
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+
+   
+            <input type="submit" value="Sign Up">
+        </form>
+        <p>Already have an account? <a href="/auth/login">Login</a></p>
+    </div>
+</body>
+</html>

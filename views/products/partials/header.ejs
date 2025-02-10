@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Header Container */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 30px;
+            height: 60px;
+            background-color: #ffffff;
+            border-bottom: 2px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container h2 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            flex-grow: 1;
+            max-width: 50%;
+            margin: 0 20px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-bar:focus {
+            border-color: #007bff;
+        }
+
+        /* Buttons */
+        button {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .cart-btn {
+            background-color: #ffc107;
+            color: #333;
+        }
+
+        .cart-btn:hover {
+            background-color: #e0a800;
+        }
+
+        /* User Account Container */
+        .user-account-container {
+            position: relative;
+        }
+
+        /* Profile Picture Styling */
+        .user-account {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            /* Makes the image circular */
+            object-fit: cover;
+            /* Ensures the image fits well inside the circle */
+            cursor: pointer;
+            border: 2px solid #ddd;
+            /* Optional: adds a border around the profile picture */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .user-account:hover {
+            transform: scale(1.1);
+            /* Slight zoom effect on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            /* Adds a shadow on hover */
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            /* Adjusted to avoid overlapping with the profile picture */
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            min-width: 150px;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px;
+            font-size: 14px;
+            text-decoration: none;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+                justify-content: center;
+                text-align: center;
+                height: auto;
+                padding: 10px 15px;
+            }
+
+            .header-container h2 {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+
+            .search-bar {
+                flex-grow: 1;
+                max-width: 100%;
+                margin: 10px 0;
+            }
+
+            button {
+                font-size: 12px;
+                padding: 6px 8px;
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <% if (!isAuthenticated) { %>
+        <div class="header-container">
+            <h2>E-Commerce</h2>
+            <input type="text" class="search-bar" placeholder="Search...">
+            <button class="login-btn" onclick="window.location.href='/auth/login'">Login</button>
+            <button class="signup-btn" onclick="window.location.href='/auth/signup'">Signup for free</button>
+        </div>
+        <% } else { %>
+            <div class="header-container">
+                <h2>E-Commerce</h2>
+                <input type="text" class="search-bar" placeholder="Search...">
+                <button class="cart-btn" onclick="window.location.href='/cart'">Cart</button>
+                <div class="user-account-container">
+                    <!-- <span class="user-account" onclick="toggleDropdown()"><%= user.name %></span> -->
+                    <img src="<%= user.profilePicture ? user.profilePicture : '/uploads/user/default-profile.jpg' %>"
+                        alt="Profile" class="user-account" onclick="toggleDropdown()">
+                    <div class="dropdown-menu">
+                        <a href="/profile">My Profile</a>
+                        <a href="/order/userOrders">My Orders</a>
+                        <a href="/auth/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+                <script>
+                    function toggleDropdown() {
+                        const dropdown = document.querySelector('.dropdown-menu');
+                        dropdown.classList.toggle('active');
+                    }
+
+                    // Close the dropdown if clicked outside
+                    document.addEventListener('click', function (e) {
+                        const dropdown = document.querySelector('.dropdown-menu');
+                        const account = document.querySelector('.user-account');
+                        if (!dropdown.contains(e.target) && !account.contains(e.target)) {
+                            dropdown.classList.remove('active');
+                        }
+                    });
+                </script>
+</body>
+
+</html>

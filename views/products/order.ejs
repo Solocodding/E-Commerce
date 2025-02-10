@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Order</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        hr {
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        /* Order Card Styles */
+        .order-card {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            background-color: antiquewhite;
+            padding: 15px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .card-header h5 {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .status.pending {
+            background-color: #ffc107;
+            color: #fff;
+        }
+
+        .status.shipped {
+            background-color: #17a2b8;
+            color: #fff;
+        }
+
+        .status.delivered {
+            background-color: #28a745;
+            color: #fff;
+        }
+
+        .card-body p {
+            margin: 5px 0;
+        }
+
+        /* Product Styles */
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .product {
+            width: 300px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .product h5 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .product p {
+            font-size: 0.9rem;
+            color: #555;
+            margin: 5px 0;
+        }
+        .backToHome {
+            display: inline-block;
+    width: 34px;
+    height: 34px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath d='M12 3l9 8h-3v7h-4v-4h-4v4H6v-7H3l9-8z' fill='%23000'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    text-decoration: none; /* Remove underline */
+    cursor: pointer;
+    }
+    .backToHome:hover {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath d='M12 3l9 8h-3v7h-4v-4h-4v4H6v-7H3l9-8z' fill='%23007bff'%3E%3C/path%3E%3C/svg%3E");
+  }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <a class="backToHome" href="/"></a>
+        <h2>ORDER HISTORY</h2>
+        <hr>
+
+        <% if (orders.length> 0) { %>
+            <% orders.forEach((order)=> { %>
+                <div class="order-card">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Order ID: <%= order._id %>
+                            </h5>
+                            <span class="status <%= order.status.toLowerCase() %>">
+                                <%= order.status %>
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <p>Order Date: <%= new Date(order.createdAt).toLocaleDateString() %>
+                            </p>
+                            <p>Total Amount: $<%= order.totalAmount %>
+                            </p>
+
+                            <div class="products">
+                                <% order.products.forEach((product)=> { %>
+                                    <div class="product">
+                                        <div class="image-container">
+                                            <img src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                                        </div>
+                                        <div class="product-info">
+                                            <h3>
+                                                <%= product.name %>
+                                            </h3>
+                                            <p>Price: $<%= product.price %>
+                                            </p>
+                                            <p>Quantity: <%= product.quantity %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <% }); %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+                    <% } else { %>
+                        <h3>No Orders Placed...</h3>
+                        <% } %>
+    </div>
+</body>
+
+</html>

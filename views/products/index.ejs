@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce</title>
+    <link rel="stylesheet" href="/home.css">
+</head>
+
+<body>
+    <header>
+        <%- include("partials/header", { user: user, isAuthenticated:isAuthenticated }); %>
+    </header>
+
+    <div class="products-container">
+        <% products.forEach(product=> { %>
+            <div class="card">
+                <div class="product-image-container" onclick="openModal('<%= product.id %>')">
+                    <img src="<%= product.imageUrl %>" alt="<%= product.name %>" class="product-image">
+                </div>
+                <div class="about-image-container">
+                    <h3 class="product-name">
+                        <%= product.name %>
+                    </h3>
+                    <p class="product-description">
+                        <%= product.description %>
+                    </p>
+                    <p class="product-price">Price: $<%= product.price %>
+                    </p>
+                    <p class="product-stock">Stock: <%= product.stock %> units available</p>
+                    <button class="add-to-cart-btn"
+                        onclick="<%= isAuthenticated %> ? addToCart('<%= product.id %>', this) : window.location.href='/auth/login'">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div id="modal-<%= product.id %>" class="modal" onclick="closeModal(event, '<%= product.id %>')">
+                <div class="modal-content" onclick="event.stopPropagation()">
+                    <button class="modal-close" onclick="closeModal(event, '<%= product.id %>')">X</button>
+                    <div class="modal-header">
+                        <%= product.name %>
+                    </div>
+                    <div class="modal-body">
+                        <img src="<%= product.imageUrl %>" alt="<%= product.name %>">
+                        <div class="modal-details">
+                            <p>
+                                <%= product.description %>
+                            </p>
+                            <p><b>Price:</b> $<%= product.price %>
+                            </p>
+                            <p><b>Stock:</b>
+                                <%= product.stock %> units available
+                            </p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            onclick="<%= isAuthenticated %> ? addToCart('<%= product.id %>', this) : window.location.href='/auth/login'">
+                            Add to Cart
+                        </button>
+                        <button class="close-modal-btn" onclick="closeModal(event, '<%= product.id %>')">Close</button>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+    </div>
+
+    <footer>
+        <%- include("partials/footer", { isAuthenticated: isAuthenticated }); %>
+    </footer>
+
+    <script>
+
+
+        function addToCart(productId, button) {
+
+            // console.log(productId);
+            fetch('/cart/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    productId: productId,
+                    quantity: 1
+                }),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    button.disabled = true;
+                    button.textContent = "Added to Cart";
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
+
+
+        //Model handler functions
+        function openModal(productId) {
+            const modal = document.getElementById(`modal-${productId}`);
+            modal.style.display = 'flex';
+        }
+
+        function closeModal(event, productId) {
+            const modal = document.getElementById(`modal-${productId}`);
+            if (event.target === modal || event.target.classList.contains('modal-close') || event.target.classList.contains('close-modal-btn')) {
+                modal.style.display = 'none';
+            }
+        }
+
+    </script>
+</body>
+
+</html>

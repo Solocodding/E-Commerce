@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edit Product</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eee;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 25px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+
+    .form-label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .form-check {
+      margin-bottom: 10px;
+    }
+
+    .form-check-input {
+      margin-right: 10px;
+    }
+
+    .btn {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    .image-preview {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .backToHome {
+            display: inline-block;
+    width: 34px;
+    height: 34px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath d='M12 3l9 8h-3v7h-4v-4h-4v4H6v-7H3l9-8z' fill='%23000'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    text-decoration: none; /* Remove underline */
+    cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card">
+      <a class="backToHome" href="/seller"></a>
+      <h1 class="text-center">Edit  Product</h1>
+      <form id="editProductForm">
+        <label class="form-label" for="productName">Product Name</label>
+        <input type="text" class="form-control" id="productName" name="name" value="<%= product.name %>" required />
+
+        <label class="form-label" for="productDescription">Description</label>
+        <textarea class="form-control" id="productDescription" name="description"  required><%= product.description %></textarea>
+
+        <label class="form-label" for="productPrice">Price</label>
+        <input type="number" class="form-control" id="productPrice" name="price" value="<%= product.price %>" required min="0" step="0.01" />
+
+        <label class="form-label" for="productStock">Stock</label>
+        <input type="number" class="form-control" id="productStock" name="stock" value="<%= product.stock %>" required min="0" />
+
+        <label class="form-label" for="productImageUrl">Image URL</label>
+        <input type="url" class="form-control" id="productImageUrl" name="imageUrl" value="<%= product.imageUrl %>" required onchange="updateImg(event)" />
+
+        <div class="image-preview">
+          <img id="productImage" src="<%= product.imageUrl %>" alt="Product Image">
+        </div>
+
+        <button type="submit" class="btn">Edit Product</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function updateImg(event) {
+      const imageUrl = event.target.value;
+      const imageElement = document.getElementById('productImage');
+      imageElement.src = imageUrl || "<%= product.imageUrl %>";
+    }
+
+    document.getElementById('editProductForm').addEventListener('submit', function (e) {
+        // console.log("entered")
+      e.preventDefault(); // Prevent the default form submission behavior
+
+      // Collect form data
+      const productId = "<%= product._id %>";
+      console.log(productId);   ////////////////////////
+      const formData = {
+        name: document.getElementById('productName').value,
+        description: document.getElementById('productDescription').value,
+        price: document.getElementById('productPrice').value,
+        stock: document.getElementById('productStock').value,
+        imageUrl: document.getElementById('productImageUrl').value,
+      };
+
+      // Basic validation to check all fields are filled
+      if (!formData.name || !formData.description || !formData.price || !formData.stock || !formData.imageUrl) {
+        alert('All fields must be filled!');
+        return;
+      }
+
+    //   // Submit data using fetch
+    //   fetch(`/admin/editProduct/${productId}`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(formData),
+    //   })
+    //     .then((response) => response.json())
+    //     // console.log("response done ")
+    //     .then((data) => {
+    //       console.log(data);
+    //       alert(data.message);
+    //       if (data.success) {
+    //         window.location.href = '/seller';
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       alert('An error occurred while editing the product. Please try again.');
+    //     });
+
+    
+        fetch(`/seller/editProduct/${productId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        })
+        .then(response => response.json())
+        .then(data => {
+          alert(data.message);
+          window.location.href = '/seller';
+        })
+        .catch((error) => {
+          alert('Some Error Occurred in Adding the Product')
+          // console.error('Error:', error);
+        });
+    });
+  </script>
+</body>
+
+</html>
