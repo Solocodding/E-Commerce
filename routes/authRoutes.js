@@ -28,16 +28,13 @@ router.get("/login",verifyToken,(req, res) => {
 })
 
 router.get("/reset-password",verifyToken,(req, res) => {
-    if(!req.isAuthenticated){
-        return res.redirect('/auth/login');
-    }
     res.render("./auth/resetPassword");
 })
 
 router.get("/updatePassword", verifyToken,(req, res) => {
-    if(!req.isAuthenticated){
-        return res.redirect('/auth/login');
-    }
+    // if(!req.isAuthenticated){
+    //     return res.redirect('/auth/login');
+    // }
     res.render("./auth/updatePassword"); 
 });
 router.get('/logout', (req, res) => {

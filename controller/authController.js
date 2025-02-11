@@ -79,11 +79,12 @@ async function signup(req, res) {
 async function login(req, res) {
     try {
         const user = req.body;
+        // console.log(user);
 
         const foundUser = await User.findOne({ email: user.email });
 
         if (!foundUser || !(user.role === foundUser.role)) {
-            return res.render("./auth/login", { message: "Invalid credentials" });
+            return res.render("./auth/login", { message: "Invalid credentials role not match" });
         }
         if(!(await bcrypt.compare(user.password, foundUser.password))){
             return res.render("./auth/login", { message: "Invalid password" });
