@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/login.css"> 
+    <script>
+        window.onload = function () {
+            const msg = "<%= typeof message !== 'undefined' ? message : '' %>";
+            if (msg) {
+                alert(msg);
+            }
+        };
+    </script>
+</head>
+<body>
+    
+    <div class="login-container">
+        <h1>Welcome Back</h1>
+        <form method="POST" action="/auth/login">
+            
+            <!--Role Field-->
+            <label for="role">Role:</label>
+            <select id="role" name="role">
+                <option value="user">User</option>
+                <option value="seller">Seller</option>
+            </select>
+            
+            <!-- Email Field -->
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+            <!-- Password Field -->
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+            <!-- Submit Button -->
+            <input type="submit" value="Login">
+        </form>
+        <p>Don't have an account? <a href="/auth/signup">Sign Up</a></p> <!-- Link to sign-up page -->
+        <a href="/auth/reset-password" class="forgot-password">Forgot Password?</a>
+    </div>
+</body>
+</html>
+

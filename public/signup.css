@@ -1,0 +1,153 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #a8c0ff, #3f6ff6); /* Soft blue gradient */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    overflow: hidden; /* Prevent body scrolling */
+}
+
+/* Container Styling */
+.signup-container {
+    background-color: white;
+    padding: 30px; /* Reduced padding */
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px; /* Slightly smaller width */
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+/* Hover Effect on Container */
+.signup-container:hover {
+    transform: scale(1.02);
+}
+
+/* Heading Styling */
+h1 {
+    font-size: 22px; /* Reduced font size */
+    color: #333;
+    margin-bottom: 15px; /* Reduced margin */
+    font-weight: 600;
+}
+
+/* Form Styling */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+/* Label Styling */
+label {
+    font-size: 14px; /* Reduced font size */
+    margin-bottom: 6px; /* Reduced spacing */
+    color: #555;
+    text-align: left;
+}
+
+/* Input and Select Fields Styling */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    padding: 10px 14px; /* Reduced padding */
+    margin-bottom: 15px; /* Reduced spacing */
+    border: 1px solid #d3d3d3;
+    border-radius: 6px;
+    font-size: 14px; /* Reduced font size */
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    height: 38px; /* Reduced height */
+}
+
+/* Select Dropdown Styling */
+select {
+    appearance: none;
+    -webkit-appearance: none; /* Safari */
+    -moz-appearance: none; /* Firefox */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%23999'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 14px;
+    text-align-last: left; /* Align text on the left */
+    color: #555;
+}
+
+/* Focused Input and Select Styling */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus {
+    border-color: #a3c1e5;
+    box-shadow: 0 0 4px rgba(163, 193, 229, 0.5);
+}
+
+/* Submit Button Styling */
+input[type="submit"] {
+    padding: 12px;
+    background-color: #6fa3f3;
+    color: white;
+    border: none;
+    border-radius: 6px; /* Reduced border radius */
+    font-size: 16px; /* Slightly smaller font */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Submit Button Hover Effect */
+input[type="submit"]:hover {
+    background-color: #4a90e2;
+    transform: translateY(-2px);
+}
+
+/* Submit Button Active Effect */
+input[type="submit"]:active {
+    background-color: #357ab7;
+    transform: translateY(1px);
+}
+
+/* Paragraph and Link Styling */
+p {
+    font-size: 12px; /* Reduced font size */
+    color: #555;
+}
+
+a {
+    color: #6fa3f3;
+    text-decoration: none;
+    font-size: 12px; /* Reduced font size */
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #4a90e2;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+    .signup-container {
+        padding: 20px; /* Further reduce padding for smaller screens */
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="submit"],
+    select {
+        font-size: 13px; /* Further reduce font size for smaller screens */
+    }
+}
